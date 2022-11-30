@@ -1,4 +1,5 @@
 import Koa from "koa";
+import cors from "@koa/cors";
 import fs from "fs";
 import util from "util";
 
@@ -17,6 +18,12 @@ type DataType = {
 };
 
 const readFile = util.promisify(fs.readFile);
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 app.use(async (ctx) => {
   const dataBuffer = await readFile("./src/data.json", "utf-8");

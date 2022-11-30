@@ -2,42 +2,37 @@ import create from "zustand";
 
 type Store = {
   entries: Entry[];
-  newEntry: Entry;
-  addEntry: () => void;
-  setNewEntry: (entry: Entry) => void;
+  setEntries: (entries: Entry[]) => void;
+  deleteEntry: (entryId: number) => void;
 };
 
-const emptyEntry: Entry = {
-  id: 0,
-  name: "",
-  email: "",
-  gender: "male",
-  address: {
-    street: "",
-    city: "",
-  },
-  phone: "",
+const deleteOneEntry = (entries: Entry[], entryId: number) => {
+  const oldEntries = [...entries];
+  const newEntries = oldEntries.filter((entry) => entry.id !== entryId);
+  return newEntries;
 };
 
 const useStore = create<Store>((set) => ({
   entries: [],
-  newEntry: emptyEntry,
-  addEntry() {
+  setEntries: (entries) => {
     set((state) => ({
       ...state,
-      entries: addEntry(state.entries, state.newEntry),
-      newEntry: emptyEntry,
+      entries: entries,
     }));
   },
-  setNewEntry(entry: Entry) {
+  deleteEntry: (entryId) => {
     set((state) => ({
       ...state,
-      newEntry: entry,
+      entries: deleteOneEntry(state.entries, entryId),
     }));
   },
 }));
 
-function addEntry(entries: Entry[], newEntry: Entry) {
-  entries.push(newEntry);
-  return entries;
-}
+export default useStore;
+
+export const useEntries = () =>
+  useStore((state) => ({
+    entries: state.entries,
+    setEntries: state.setEntries,
+    deleteEntry: state.deleteEntry,
+  }));
