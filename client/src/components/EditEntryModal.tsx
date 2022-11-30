@@ -7,31 +7,7 @@ import { useEntries, useModals } from "../hooks/useStore";
 
 // Components
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
-
-const Form = styled.form`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-`;
-
-const FormInputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-`;
-
-const FormDiv = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const FormButton = styled.button`
-  margin-top: 1.25rem;
-  width: 100%;
-`;
+import Form from "./Form";
 
 const EditEntryModal = () => {
   const { isEditModal, setIsEditModal } = useModals();
@@ -74,6 +50,7 @@ const EditEntryModal = () => {
 
   function handleEditEntry(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     const structuredForm: Entry = {
       id: currentEntry.id,
       name: form.name,
@@ -85,6 +62,7 @@ const EditEntryModal = () => {
       },
       phone: form.phone,
     };
+
     editEntry(structuredForm);
     setIsEditModal(false);
   }
@@ -93,46 +71,11 @@ const EditEntryModal = () => {
     <Modal centered size="md" isOpen={isEditModal} toggle={() => setIsEditModal(false)}>
       <ModalHeader>Edit Entry</ModalHeader>
       <ModalBody>
-        <Form onSubmit={handleEditEntry}>
-          <FormDiv>
-            <FormInputWrapper>
-              <label htmlFor="name">name:</label>
-              <input id="name" name="name" value={form.name} onChange={handleFormChange} />
-            </FormInputWrapper>
-            <FormInputWrapper>
-              <label htmlFor="email">email:</label>
-              <input id="email" name="email" value={form.email} onChange={handleFormChange} />
-            </FormInputWrapper>
-          </FormDiv>
-          <FormDiv>
-            <FormInputWrapper>
-              <label htmlFor="gender">gender:</label>
-              <select id="gender" name="gender" value={form.gender} onChange={handleFormChange}>
-                <option id="male" value="male">
-                  Male
-                </option>
-                <option id="female" value="female">
-                  Female
-                </option>
-              </select>
-            </FormInputWrapper>
-            <FormInputWrapper>
-              <label htmlFor="city">city:</label>
-              <input id="city" name="city" value={form.city} onChange={handleFormChange} />
-            </FormInputWrapper>
-          </FormDiv>
-          <FormDiv>
-            <FormInputWrapper>
-              <label htmlFor="street">street:</label>
-              <input id="street" name="street" value={form.street} onChange={handleFormChange} />
-            </FormInputWrapper>
-            <FormInputWrapper>
-              <label htmlFor="phone">phone:</label>
-              <input id="phone" name="phone" value={form.phone} onChange={handleFormChange} />
-            </FormInputWrapper>
-          </FormDiv>
-          <FormButton>Edit Entry</FormButton>
-        </Form>
+        <Form
+          buttonText="Edit Entry"
+          state={{ form, setForm, handleFormChange }}
+          onSubmit={handleEditEntry}
+        />
       </ModalBody>
     </Modal>
   );
