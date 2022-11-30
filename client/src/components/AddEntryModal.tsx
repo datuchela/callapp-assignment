@@ -1,8 +1,14 @@
-import { useState } from "react";
-import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import styled from "styled-components";
+
+// Custom hooks
+import useForm from "../hooks/useForm";
 import { useEntries, useModals } from "../hooks/useStore";
 
+// Components
+import { Modal, ModalBody, ModalHeader } from "reactstrap";
+import { Input, Select, Button } from "antd";
+
+// Styled Components
 const Form = styled.form`
   display: flex;
   align-items: center;
@@ -11,26 +17,21 @@ const Form = styled.form`
   padding: 1rem;
 `;
 
-const FormInputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-`;
-
 const FormDiv = styled.div`
   width: 100%;
   display: flex;
+  gap: 2rem;
   justify-content: space-between;
 `;
+//
 
-const FormButton = styled.button`
-  margin-top: 1.25rem;
-  width: 100%;
-`;
-
+// Main Component
 const AddEntryModal = () => {
-  const { isAddModal, setIsAddModal } = useModals();
-  const [form, setForm] = useState({
+  const {
+    form,
+    setForm,
+    handleChange: handleFormChange,
+  } = useForm({
     name: "",
     email: "",
     gender: "male",
@@ -39,14 +40,12 @@ const AddEntryModal = () => {
     phone: "",
   });
 
+  const { isAddModal, setIsAddModal } = useModals();
   const { addEntry } = useEntries();
-
-  function handleFormChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  }
 
   function handleAddEntry(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     const structuredForm: EntryWithoutId = {
       name: form.name,
       email: form.email,
@@ -57,8 +56,17 @@ const AddEntryModal = () => {
       },
       phone: form.phone,
     };
+
     addEntry(structuredForm);
     setIsAddModal(false);
+    setForm({
+      name: "",
+      email: "",
+      gender: "male",
+      city: "",
+      street: "",
+      phone: "",
+    });
   }
 
   return (
@@ -67,43 +75,62 @@ const AddEntryModal = () => {
       <ModalBody>
         <Form onSubmit={handleAddEntry}>
           <FormDiv>
-            <FormInputWrapper>
-              <label htmlFor="name">name:</label>
-              <input id="name" name="name" value={form.name} onChange={handleFormChange} />
-            </FormInputWrapper>
-            <FormInputWrapper>
-              <label htmlFor="email">email:</label>
-              <input id="email" name="email" value={form.email} onChange={handleFormChange} />
-            </FormInputWrapper>
+            <Input
+              id="name"
+              name="name"
+              value={form.name}
+              onChange={handleFormChange}
+              addonBefore={<label htmlFor="name">name</label>}
+            />
+            <Input
+              id="email"
+              name="email"
+              value={form.email}
+              onChange={handleFormChange}
+              addonBefore={<label htmlFor="email">email</label>}
+            />
           </FormDiv>
           <FormDiv>
-            <FormInputWrapper>
-              <label htmlFor="gender">gender:</label>
-              <select id="gender" name="gender" value={form.gender} onChange={handleFormChange}>
-                <option id="male" value="male">
-                  Male
-                </option>
-                <option id="female" value="female">
-                  Female
-                </option>
-              </select>
-            </FormInputWrapper>
-            <FormInputWrapper>
-              <label htmlFor="city">city:</label>
-              <input id="city" name="city" value={form.city} onChange={handleFormChange} />
-            </FormInputWrapper>
+            <label htmlFor="gender">gender:</label>
+            <Select
+              id="gender"
+              value={form.gender}
+              onChange={(e) => setForm({ ...form, gender: e })}
+            >
+              <Select.Option id="male" value="male">
+                Male
+              </Select.Option>
+              <Select.Option id="female" value="female">
+                Female
+              </Select.Option>
+            </Select>
+            <Input
+              id="city"
+              name="city"
+              value={form.city}
+              onChange={handleFormChange}
+              addonBefore={<label htmlFor="city">city</label>}
+            />
           </FormDiv>
           <FormDiv>
-            <FormInputWrapper>
-              <label htmlFor="street">street:</label>
-              <input id="street" name="street" value={form.street} onChange={handleFormChange} />
-            </FormInputWrapper>
-            <FormInputWrapper>
-              <label htmlFor="phone">phone:</label>
-              <input id="phone" name="phone" value={form.phone} onChange={handleFormChange} />
-            </FormInputWrapper>
+            <Input
+              id="street"
+              name="street"
+              value={form.street}
+              onChange={handleFormChange}
+              addonBefore={<label htmlFor="street">street</label>}
+            />
+            <Input
+              id="phone"
+              name="phone"
+              value={form.phone}
+              onChange={handleFormChange}
+              addonBefore={<label htmlFor="phone">phone</label>}
+            />
           </FormDiv>
-          <FormButton>Add Entry</FormButton>
+          <Button htmlType="submit" style={{ width: "100%" }} size="large" type="primary">
+            Add Entry
+          </Button>
         </Form>
       </ModalBody>
     </Modal>

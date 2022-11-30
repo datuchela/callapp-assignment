@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 
 // Custom hooks
@@ -23,9 +22,9 @@ const TableWrapperDiv = styled.div`
 
 const EntriesTable = () => {
   const { setIsAddModal, setIsEditModal } = useModals();
-
   const { deleteEntry, setCurrentEntryId } = useEntries();
   const entries = useFetchEntries();
+
   const columns = createColumns(deleteEntry);
 
   return (

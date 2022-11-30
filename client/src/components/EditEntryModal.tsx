@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
-import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import styled from "styled-components";
+
+// Custom hooks
+import useForm from "../hooks/useForm";
 import { useEntries, useModals } from "../hooks/useStore";
+
+// Components
+import { Modal, ModalBody, ModalHeader } from "reactstrap";
 
 const Form = styled.form`
   display: flex;
@@ -30,13 +35,17 @@ const FormButton = styled.button`
 
 const EditEntryModal = () => {
   const { isEditModal, setIsEditModal } = useModals();
-  const { entries, editEntry, currentEntryId, setCurrentEntryId } = useEntries();
+  const { entries, editEntry, currentEntryId } = useEntries();
 
   const [currentEntry, setCurrentEntry] = useState<Entry>(
     entries.filter((entry) => entry.id === currentEntryId)[0]
   );
 
-  const [form, setForm] = useState({
+  const {
+    form,
+    setForm,
+    handleChange: handleFormChange,
+  } = useForm({
     name: "",
     email: "",
     gender: "male",
@@ -46,7 +55,6 @@ const EditEntryModal = () => {
   });
 
   useEffect(() => {
-    console.log("currentEntryId: ", currentEntryId);
     if (!currentEntryId) return;
     const entryFromArray = entries.filter((entry) => entry.id === currentEntryId)[0];
     setCurrentEntry(entryFromArray);
@@ -63,10 +71,6 @@ const EditEntryModal = () => {
       phone: currentEntry.phone,
     });
   }, [currentEntry]);
-
-  function handleFormChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  }
 
   function handleEditEntry(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
