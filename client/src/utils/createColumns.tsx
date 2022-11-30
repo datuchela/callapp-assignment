@@ -3,27 +3,27 @@ import { TableColumn } from "react-data-table-component";
 export const createColumns = (deleteEntry: (id: number) => void): TableColumn<Entry>[] => {
   return [
     {
-      name: "Id",
+      name: "id",
       selector: (row) => row.id,
     },
     {
-      name: "Name",
+      name: "name",
       selector: (row) => row.name,
     },
     {
-      name: "Email",
+      name: "email",
       selector: (row) => row.email,
     },
     {
-      name: "Gender",
+      name: "gender",
       selector: (row) => row.gender,
     },
     {
-      name: "Address",
+      name: "address",
       selector: (row) => `${row.address.city}, ${row.address.street}`,
     },
     {
-      name: "Phone",
+      name: "phone",
       selector: (row) => row.phone,
     },
     {
