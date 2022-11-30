@@ -3,8 +3,6 @@ import styled from "styled-components";
 import { useEntries } from "../hooks/useStore";
 import { createPieChart } from "../utils/createPieChart";
 
-// const series = [44, 55, 13, 43];
-
 const ChartWrapperDiv = styled.div`
   margin: 0 0 3rem 0;
   width: 400px;
