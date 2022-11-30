@@ -1,4 +1,5 @@
 import { TableColumn } from "react-data-table-component";
+import { Button } from "antd";
 
 export const createColumns = (deleteEntry: (id: number) => void): TableColumn<Entry>[] => {
   return [
@@ -28,7 +29,11 @@ export const createColumns = (deleteEntry: (id: number) => void): TableColumn<En
     },
     {
       button: true,
-      cell: (row) => <button onClick={() => deleteEntry(row.id)}>delete</button>,
+      cell: (row) => (
+        <Button danger onClick={() => deleteEntry(row.id)}>
+          Delete
+        </Button>
+      ),
     },
   ];
 };

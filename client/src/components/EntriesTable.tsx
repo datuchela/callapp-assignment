@@ -1,9 +1,16 @@
 import { useState } from "react";
-import DataTable from "react-data-table-component";
-import { useEntries, useModals } from "../hooks/useStore";
 import styled from "styled-components";
-import { createColumns } from "../utils/createColumns";
+
+// Custom hooks
+import { useEntries, useModals } from "../hooks/useStore";
 import useFetchEntries from "../hooks/useFetchEntries";
+
+// Utils
+import { createColumns } from "../utils/createColumns";
+
+// Components
+import DataTable from "react-data-table-component";
+import { Button } from "antd";
 import AddEntryModal from "./AddEntryModal";
 import EditEntryModal from "./EditEntryModal";
 
@@ -15,17 +22,9 @@ const TableWrapperDiv = styled.div`
 `;
 
 const EntriesTable = () => {
-  const { isAddModal, setIsAddModal, setIsEditModal } = useModals();
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    gender: "male",
-    city: "",
-    street: "",
-    phone: "",
-  });
+  const { setIsAddModal, setIsEditModal } = useModals();
 
-  const { deleteEntry, addEntry, currentEntryId, setCurrentEntryId } = useEntries();
+  const { deleteEntry, setCurrentEntryId } = useEntries();
   const entries = useFetchEntries();
   const columns = createColumns(deleteEntry);
 
@@ -34,7 +33,9 @@ const EntriesTable = () => {
       <AddEntryModal />
       <EditEntryModal />
       <TableWrapperDiv>
-        <button onClick={() => setIsAddModal(true)}>add</button>
+        <Button type="primary" onClick={() => setIsAddModal(true)}>
+          Add Entry
+        </Button>
         <DataTable
           onRowDoubleClicked={(row) => {
             setCurrentEntryId(row.id);
