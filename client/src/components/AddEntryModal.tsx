@@ -25,7 +25,6 @@ const FormDiv = styled.div`
 `;
 //
 
-// Main Component
 const AddEntryModal = () => {
   const {
     form,

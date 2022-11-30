@@ -42,7 +42,9 @@ const EntriesTable = () => {
           }}
           columns={columns}
           data={entries}
-          defaultSortFieldId={"Id"}
+          defaultSortFieldId={"id"}
+          pointerOnHover
+          highlightOnHover
         />
       </TableWrapperDiv>
     </>
