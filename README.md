@@ -1,6 +1,6 @@
 # callapp assignment
 
-A Simple full-stack app I have been given as an assignment to test my skills
+A Simple app I have been given as an assignment to test my skills
 
 # Run it locally
 
