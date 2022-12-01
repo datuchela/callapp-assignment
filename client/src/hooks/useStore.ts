@@ -22,6 +22,9 @@ const deleteOneEntry = (entries: Entry[], entryId: number) => {
 
 const addOneEntry = (entries: Entry[], newEntry: EntryWithoutId) => {
   const newEntries = [...entries];
+
+  // Obviously, this is bad practice in real-life applications
+  // But for the demonstration, it will do.
   newEntries.push({ ...newEntry, id: entries[entries.length - 1].id + 1 });
   return newEntries;
 };
