@@ -62,7 +62,6 @@ const EditEntryModal = () => {
 
     editEntry(structuredForm);
     setIsEditModal(false);
-    // setForm(initialFormValues);
   }
 
   return (
