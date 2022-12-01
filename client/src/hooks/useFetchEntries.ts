@@ -11,9 +11,13 @@ const useFetchEntries = () => {
     const controller = new AbortController();
 
     async function fetchData() {
-      const response = await fetch(BASE_URL);
-      const data = await response.json();
-      setEntries(data);
+      try {
+        const response = await fetch(BASE_URL);
+        const data: Entry[] = await response.json();
+        setEntries(data);
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     isMount && fetchData();
