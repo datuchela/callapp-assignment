@@ -13,5 +13,4 @@ A Simple full-stack app I have been given as an assignment to test my skills
 
 ### In order to build this app you will need to:
 
-run `npm run build` in both `server` and `client` directories
-the files will be outputed into `dist`
+run `npm run build` in both `server` and `client` directories. the files will be outputed into `dist` folders
