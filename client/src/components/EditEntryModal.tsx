@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 
 // Custom hooks
 import useForm from "../hooks/useForm";
@@ -9,6 +8,15 @@ import { useEntries, useModals } from "../hooks/useStore";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import Form from "./Form";
 
+const initialFormValues = {
+  name: "",
+  email: "",
+  gender: "male",
+  city: "",
+  street: "",
+  phone: "",
+};
+
 const EditEntryModal = () => {
   const { isEditModal, setIsEditModal } = useModals();
   const { entries, editEntry, currentEntryId } = useEntries();
@@ -17,18 +25,7 @@ const EditEntryModal = () => {
     entries.filter((entry) => entry.id === currentEntryId)[0]
   );
 
-  const {
-    form,
-    setForm,
-    handleChange: handleFormChange,
-  } = useForm({
-    name: "",
-    email: "",
-    gender: "male",
-    city: "",
-    street: "",
-    phone: "",
-  });
+  const { form, setForm, handleChange: handleFormChange } = useForm(initialFormValues);
 
   useEffect(() => {
     if (!currentEntryId) return;
@@ -65,6 +62,7 @@ const EditEntryModal = () => {
 
     editEntry(structuredForm);
     setIsEditModal(false);
+    setForm(initialFormValues);
   }
 
   return (

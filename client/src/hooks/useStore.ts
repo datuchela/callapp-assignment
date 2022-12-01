@@ -83,8 +83,6 @@ const useStore = create<Store>((set) => ({
   },
 }));
 
-export default useStore;
-
 export const useEntries = () =>
   useStore((state) => ({
     entries: state.entries,
@@ -103,3 +101,5 @@ export const useModals = () =>
     isEditModal: state.isEditModal,
     setIsEditModal: state.setIsEditModal,
   }));
+
+export default useStore;
