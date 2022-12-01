@@ -1,21 +1,25 @@
 export const createPieChart = (entries: Entry[]) => {
-  const cities: Set<string> = new Set(); //using Set because don't want duplicates
-  const entryCopy = [...entries];
-  entryCopy.sort((a, b) => {
+  // Using Set for cities instead of Array because we don't want duplicates
+  const cities: Set<string> = new Set();
+  const entriesCopy = [...entries];
+  // Sorting entries based on city before looping over it,
+  // This way the order of cities stays consistent as data changes.
+  entriesCopy.sort((a, b) => {
     var cityA = a.address.city.toLowerCase(),
       cityB = b.address.city.toLowerCase();
     if (cityA < cityB) return -1;
     if (cityA > cityB) return 1;
     return 0;
   });
-  entryCopy.forEach((entry) => {
+
+  entriesCopy.forEach((entry) => {
     cities.add(entry.address.city);
   });
 
   const series: number[] = [];
 
   cities.forEach((city) => {
-    series.push(entryCopy.filter((entry) => entry.address.city === city).length);
+    series.push(entriesCopy.filter((entry) => entry.address.city === city).length);
   });
 
   const options = {
