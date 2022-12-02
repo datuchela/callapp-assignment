@@ -21,17 +21,9 @@ const EditEntryModal = () => {
   const { isEditModal, setIsEditModal } = useModals();
   const { entries, editEntry, currentEntryId } = useEntries();
 
-  const [currentEntry, setCurrentEntry] = useState<Entry>(
-    entries.filter((entry) => entry.id === currentEntryId)[0]
-  );
+  const currentEntry = entries.filter((entry) => entry.id === currentEntryId)[0];
 
   const { form, setForm, handleChange: handleFormChange } = useForm(initialFormValues);
-
-  useEffect(() => {
-    if (!currentEntryId) return;
-    const entryFromArray = entries.filter((entry) => entry.id === currentEntryId)[0];
-    setCurrentEntry(entryFromArray);
-  }, [currentEntryId]);
 
   useEffect(() => {
     if (!currentEntryId) return;
