@@ -20,10 +20,9 @@ const initialFormValues = {
 const EditEntryModal = () => {
   const { isEditModal, setIsEditModal } = useModals();
   const { entries, editEntry, currentEntryId } = useEntries();
+  const { form, setForm, handleChange: handleFormChange } = useForm(initialFormValues);
 
   const currentEntry = entries.filter((entry) => entry.id === currentEntryId)[0];
-
-  const { form, setForm, handleChange: handleFormChange } = useForm(initialFormValues);
 
   useEffect(() => {
     if (!currentEntryId) return;
