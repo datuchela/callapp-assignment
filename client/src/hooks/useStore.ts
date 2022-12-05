@@ -15,8 +15,7 @@ type Store = {
 };
 
 const deleteOneEntry = (entries: Entry[], entryId: number) => {
-  const oldEntries = [...entries];
-  const newEntries = oldEntries.filter((entry) => entry.id !== entryId);
+  const newEntries = entries.filter((entry) => entry.id !== entryId);
   return newEntries;
 };
 
