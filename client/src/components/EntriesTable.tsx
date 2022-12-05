@@ -25,7 +25,7 @@ const EntriesTable = () => {
   const { deleteEntry, setCurrentEntryId } = useEntries();
   const entries = useFetchEntries();
 
-  const columns = createColumns(deleteEntry);
+  const columns = createColumns(deleteEntry, entries[0]);
 
   return (
     <>
